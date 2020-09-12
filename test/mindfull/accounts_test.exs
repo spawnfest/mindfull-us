@@ -263,11 +263,11 @@ defmodule Mindfull.AccountsTest do
     test "updates the password", %{user: user} do
       {:ok, user} =
         Accounts.update_user_password(user, valid_user_password(), %{
-          password: "new valid password"
+          password: "New valid password!"
         })
 
       assert is_nil(user.password)
-      assert Accounts.get_user_by_email_and_password(user.email, "new valid password")
+      assert Accounts.get_user_by_email_and_password(user.email, "New valid password!")
     end
 
     test "deletes all tokens for the given user", %{user: user} do
@@ -275,7 +275,7 @@ defmodule Mindfull.AccountsTest do
 
       {:ok, _} =
         Accounts.update_user_password(user, valid_user_password(), %{
-          password: "new valid password"
+          password: "New valid password!"
         })
 
       refute Repo.get_by(UserToken, user_id: user.id)
