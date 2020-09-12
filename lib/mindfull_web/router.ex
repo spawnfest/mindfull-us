@@ -16,18 +16,18 @@ defmodule MindfullWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
   end
-  
+
   # TODO remove when configured mail server
-  #if Mix.env == :dev do
-    forward "/sent_emails", Bamboo.SentEmailViewerPlug
-  #end
+  # if Mix.env == :dev do
+  forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  # end
 
   scope "/", MindfullWeb do
     pipe_through :browser
 
     live "/", PageLive, :index
 
-    scope "/room" do
+    scope "/classroom" do
       pipe_through [:require_authenticated_user]
       live "/new", Classroom.NewLive, :new
       live "/:id", Classroom.ShowLive, :show
