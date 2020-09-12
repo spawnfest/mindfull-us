@@ -7,7 +7,7 @@ defmodule MindfullWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_mindfull_key",
-    signing_salt: "hvl0jyyt"
+    signing_salt: "eAOS9Fmc"
   ]
 
   socket "/socket", MindfullWeb.UserSocket,

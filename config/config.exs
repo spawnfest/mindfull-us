@@ -13,10 +13,10 @@ config :mindfull,
 # Configures the endpoint
 config :mindfull, MindfullWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "s5WfR6t0mmHz2b0erOHz9zI50pXHgkflaRW+u8DA0ObhOI7GD5801bKTQwiuIJIH",
+  secret_key_base: "s7gzqdVjp+BkEnwa6nzk2MphrKV3uQ6weyKiMTVdnszpuojo+WPujWWMDxDZkDpd",
   render_errors: [view: MindfullWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Mindfull.PubSub,
-  live_view: [signing_salt: "JmHW9jlR"]
+  live_view: [signing_salt: "QQPXRd8N"]
 
 # Configures Elixir's Logger
 config :logger, :console,
