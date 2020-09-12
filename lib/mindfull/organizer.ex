@@ -38,21 +38,17 @@ defmodule Mindfull.Organizer do
   def get_classroom!(id), do: Repo.get!(Classroom, id)
 
   @doc """
-  Creates a classroom.
+  Gets a single classroom.
 
   ## Examples
 
-      iex> create_classroom(%{field: value})
-      {:ok, %Classroom{}}
-
-      iex> create_classroom(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+      iex> get_classroom!(123)
+      %Classroom{}
   """
-  def create_classroom(attrs \\ %{}) do
-    %Classroom{}
-    |> Classroom.changeset(attrs)
-    |> Repo.insert()
+  def get_classroom(id), do: Repo.get(Classroom, id)
+
+  def create_classroom(changeset) do
+    Repo.insert(changeset)
   end
 
   @doc """

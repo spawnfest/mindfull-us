@@ -18,6 +18,11 @@ defmodule MindfullWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+
+    scope "/room" do
+      live "/new", Classroom.NewLive, :new
+      live "/:id", Classroom.ShowLive, :show
+    end
   end
 
   # Other scopes may use custom stacks.
