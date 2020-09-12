@@ -10,10 +10,15 @@ defmodule Mindfull.OrganizerTest do
     @update_attrs %{title: "some updated title"}
     @invalid_attrs %{title: nil}
 
+    defp create_classroom(attrs \\ %{}) do
+      Classroom.changeset(%Classroom{}, attrs)
+    end
+
     def classroom_fixture(attrs \\ %{}) do
       {:ok, classroom} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> create_classroom()
         |> Organizer.create_classroom()
 
       classroom
@@ -30,17 +35,27 @@ defmodule Mindfull.OrganizerTest do
     end
 
     test "create_classroom/1 with valid data creates a classroom" do
-      assert {:ok, %Classroom{} = classroom} = Organizer.create_classroom(@valid_attrs)
+      assert {:ok, %Classroom{} = classroom} =
+               @valid_attrs
+               |> create_classroom()
+               |> Organizer.create_classroom()
+
       assert classroom.title == "some title"
     end
 
     test "create_classroom/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Organizer.create_classroom(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} =
+               @invalid_attrs
+               |> create_classroom()
+               |> Organizer.create_classroom()
     end
 
     test "update_classroom/2 with valid data updates the classroom" do
       classroom = classroom_fixture()
-      assert {:ok, %Classroom{} = classroom} = Organizer.update_classroom(classroom, @update_attrs)
+
+      assert {:ok, %Classroom{} = classroom} =
+               Organizer.update_classroom(classroom, @update_attrs)
+
       assert classroom.title == "some updated title"
     end
 
