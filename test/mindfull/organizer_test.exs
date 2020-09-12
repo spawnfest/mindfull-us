@@ -1,0 +1,64 @@
+defmodule Mindfull.OrganizerTest do
+  use Mindfull.DataCase
+
+  alias Mindfull.Organizer
+
+  describe "classrooms" do
+    alias Mindfull.Organizer.Classroom
+
+    @valid_attrs %{title: "some title"}
+    @update_attrs %{title: "some updated title"}
+    @invalid_attrs %{title: nil}
+
+    def classroom_fixture(attrs \\ %{}) do
+      {:ok, classroom} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Organizer.create_classroom()
+
+      classroom
+    end
+
+    test "list_classrooms/0 returns all classrooms" do
+      classroom = classroom_fixture()
+      assert Organizer.list_classrooms() == [classroom]
+    end
+
+    test "get_classroom!/1 returns the classroom with given id" do
+      classroom = classroom_fixture()
+      assert Organizer.get_classroom!(classroom.id) == classroom
+    end
+
+    test "create_classroom/1 with valid data creates a classroom" do
+      assert {:ok, %Classroom{} = classroom} = Organizer.create_classroom(@valid_attrs)
+      assert classroom.title == "some title"
+    end
+
+    test "create_classroom/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Organizer.create_classroom(@invalid_attrs)
+    end
+
+    test "update_classroom/2 with valid data updates the classroom" do
+      classroom = classroom_fixture()
+      assert {:ok, %Classroom{} = classroom} = Organizer.update_classroom(classroom, @update_attrs)
+      assert classroom.title == "some updated title"
+    end
+
+    test "update_classroom/2 with invalid data returns error changeset" do
+      classroom = classroom_fixture()
+      assert {:error, %Ecto.Changeset{}} = Organizer.update_classroom(classroom, @invalid_attrs)
+      assert classroom == Organizer.get_classroom!(classroom.id)
+    end
+
+    test "delete_classroom/1 deletes the classroom" do
+      classroom = classroom_fixture()
+      assert {:ok, %Classroom{}} = Organizer.delete_classroom(classroom)
+      assert_raise Ecto.NoResultsError, fn -> Organizer.get_classroom!(classroom.id) end
+    end
+
+    test "change_classroom/1 returns a classroom changeset" do
+      classroom = classroom_fixture()
+      assert %Ecto.Changeset{} = Organizer.change_classroom(classroom)
+    end
+  end
+end
