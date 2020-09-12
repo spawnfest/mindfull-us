@@ -13,6 +13,9 @@ defmodule Mindfull.Application do
       MindfullWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Mindfull.PubSub},
+      # Start our Presence module.
+      MindfullWeb.Presence,
+
       # Start the Endpoint (http/https)
       MindfullWeb.Endpoint
       # Start a worker by calling: Mindfull.Worker.start_link(arg)
