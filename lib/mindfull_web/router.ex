@@ -28,6 +28,7 @@ defmodule MindfullWeb.Router do
     live "/", PageLive, :index
 
     scope "/room" do
+      pipe_through [:require_authenticated_user]
       live "/new", Classroom.NewLive, :new
       live "/:id", Classroom.ShowLive, :show
     end
