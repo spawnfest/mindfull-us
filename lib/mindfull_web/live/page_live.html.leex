@@ -1,48 +1,39 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-
-  <form phx-change="suggest" phx-submit="search">
-    <input type="text" name="q" value="<%= @query %>" placeholder="Live dependency search" list="results" autocomplete="off"/>
-    <datalist id="results">
-      <%= for {app, _vsn} <- @results do %>
-        <option value="<%= app %>"><%= app %></option>
-      <% end %>
-    </datalist>
-    <button type="submit" phx-disable-with="Searching...">Go to Hexdocs</button>
-  </form>
-</section>
-
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<div class="relative overflow-hidden px-6 pb-6">
+  <img src="/images/wave.svg" class="absolute top-0 left-2/5">
+  <div class="container mx-auto relative">
+    <div class="flex flex-col md:flex-row items-center pt-32 pb-16 md:pb-0">
+      <div class="md:w-1/2 lg:w-1/3 mb-4 sm:mb-16 md:mb-0">
+        <h1 class="text-4xl md:text-5xl font-bold text-secondary leading-tight mb-6 md:mb-10">Mindfull us</h1>
+      </div>
+      <div class="mt-16 sm:mt-0 flex-1 flex justify-end">
+        <img src="/images/hero.svg">
+      </div>
+    </div>
+  </div>
+</div>
+<div id="services" class="relative">
+  <img src="/images/circle.svg" class="absolute top-0 right-0 mt-64 hidden md:block">
+  <div class="container mx-auto px-6 py-32 relative">
+    <div class="flex flex-col md:flex-row items-center mb-24 md:mb-16 xl:mb-8 mt-16 md:mt-0 md:mt-16 lg:mt-0">
+      <img src="/images/service1.svg" class="md:w-1/3">
+      <div class="md:ml-16 xl:ml-32">
+        <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">Some text</h4>
+        <p class="text-secondary-700 text-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
+      </div>
+    </div>
+    <div class="flex flex-col-reverse md:flex-row items-center mb-24 md:mb-16 xl:mb-8">
+      <div class="md:mr-16 xl:mr-32">
+        <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4"></h4>
+        <p class="text-secondary-700 text-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
+      </div>
+      <img src="/images/service2.svg" class="md:w-1/3">
+    </div>
+    <div class="flex flex-col md:flex-row items-center">
+      <img src="/images/service3.svg" class="md:w-1/3">
+      <div class="md:ml-16 xl:ml-32">
+        <h4 class="text-2xl md:text-3xl font-bold text-secondary-800 mb-4">Some text</h4>
+        <p class="text-secondary-700 text-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet est tellus, et consequat sem sodales id. Quisque molestie et mauris efficitur lacinia.</p>
+      </div>
+    </div>
+  </div>
+</div>
