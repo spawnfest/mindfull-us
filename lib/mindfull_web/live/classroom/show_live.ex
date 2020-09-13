@@ -19,7 +19,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
     <div class="w-1/4 text-center">
     <%= if @joined do %>
     <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4" phx-click="leave_call">Leave Call</button>
-    <%= else %>
+    <% else %>
     <button class="mt-5 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4" phx-hook="JoinCall" phx-click="join_call">Join Call</button>
     <% end %>
     </div>
