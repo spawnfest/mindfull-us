@@ -45,12 +45,13 @@ defmodule MindfullWeb.Classroom.ListLive do
 
     {:ok, socket
     |> assign(:classrooms, classrooms)
+    |> assign(:cached_classrooms, classrooms)
     }
   end
 
   @impl true
   def handle_event("search", %{"search_field" => %{"query" => query}}, socket) do
-    filtered_classrooms = Organizer.filter_classrooms(socket.assigns.classrooms, query)
+    filtered_classrooms = Organizer.filter_classrooms(socket.assigns.cached_classrooms, query)
     {:noreply, assign(socket, :classrooms, filtered_classrooms)}  
   end
 
@@ -60,6 +61,7 @@ defmodule MindfullWeb.Classroom.ListLive do
 
     {:noreply, socket
     |> assign(:classrooms, classrooms)
+    |> assign(:cached_classrooms, classrooms)
     }
   end
 
