@@ -32,9 +32,9 @@ window.addEventListener("phx:page-loading-stop", info => NProgress.done())
 
 var users = {}
 
-function addUserConnection(userUuid) {
-    if (users[userUuid] === undefined) {
-      users[userUuid] = {
+function addUserConnection(userEmail) {
+    if (users[userEmail] === undefined) {
+      users[userEmail] = {
         peerConnection: null
       }
     }
@@ -42,8 +42,8 @@ function addUserConnection(userUuid) {
     return users
   }
   
-  function removeUserConnection(userUuid) {
-    delete users[userUuid]
+  function removeUserConnection(userEmail) {
+    delete users[userEmail]
   
     return users
   }
@@ -68,18 +68,18 @@ Hooks.JoinCall = {
 }
 Hooks.InitUser = {
   mounted () {
-    addUserConnection(this.el.dataset.userUuid)
+    addUserConnection(this.el.dataset.userEmail)
   },
 
   destroyed () {
-    removeUserConnection(this.el.dataset.userUuid)
+    removeUserConnection(this.el.dataset.userEmail)
   }
 }
 
 Hooks.HandleOfferRequest = {
     mounted () {
-      console.log("new offer request from", this.el.dataset.fromUserUuid)
-      let fromUser = this.el.dataset.fromUserUuid
+      console.log("new offer request from", this.el.dataset.fromUserEmail)
+      let fromUser = this.el.dataset.fromUserEmail
       createPeerConnection(this, fromUser)
     }
 }
@@ -87,7 +87,7 @@ Hooks.HandleOfferRequest = {
 Hooks.HandleIceCandidateOffer = {
     mounted () {
       let data = this.el.dataset
-      let fromUser = data.fromUserUuid
+      let fromUser = data.fromUserEmail
       let iceCandidate = JSON.parse(data.iceCandidate)
       let peerConnection = users[fromUser].peerConnection
   
@@ -100,11 +100,11 @@ Hooks.HandleIceCandidateOffer = {
 Hooks.HandleSdpOffer = {
     mounted () {
       let data = this.el.dataset
-      let fromUser = data.fromUserUuid
+      let fromUser = data.fromUserEmail
       let sdp = data.sdp
   
       if (sdp != "") {
-        console.log("new sdp OFFER from", data.fromUserUuid, data.sdp)
+        console.log("new sdp OFFER from", data.fromUserEmail, data.sdp)
   
         createPeerConnection(this, fromUser, sdp)
       }
@@ -114,7 +114,7 @@ Hooks.HandleSdpOffer = {
 Hooks.HandleAnswer = {
     mounted () {
       let data = this.el.dataset
-      let fromUser = data.fromUserUuid
+      let fromUser = data.fromUserEmail
       let sdp = data.sdp
       let peerConnection = users[fromUser].peerConnection
   
