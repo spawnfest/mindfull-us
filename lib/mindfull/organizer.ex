@@ -19,6 +19,7 @@ defmodule Mindfull.Organizer do
   """
   def list_classrooms do
     Repo.all(Classroom)
+    |> Repo.preload(:user)
   end
 
   @doc """
