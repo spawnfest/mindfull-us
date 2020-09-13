@@ -33,10 +33,6 @@
           </button>
           <nav class="hidden lg:flex items-center">
             <a href="/" class="px-6 py-3 font-bold uppercase text-primary border-b-2 border-primary">Home</a>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
-            <% end %>
-            <%= link "New classroom", to: Routes.new_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
             <%= render "_user_menu.html", assigns %>
           </nav>
         </div>
@@ -48,7 +44,7 @@
   </body>
   <footer class="bg-blue-100">
     <div class="container mx-auto px-6 py-12 text-secondary-500 text-center border-t border-gray-300">
-      <p>Copyright ©20202 Mauldfullus. All rights reserved.</p>
+      <p>Copyright ©2020 MindfullNest. All rights reserved.</p>
     </div>
   </footer>
 </html>
