@@ -1,9 +1,9 @@
 <%= if @current_user do %>
-  <%= @current_user.email %>
-  <%= link "New classroom", to: Routes.new_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
-  <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary"%>
+            <%= link "New classroom", to: Routes.new_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
+  <%= link @current_user.email, to: Routes.user_settings_path(@conn, :edit), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
   <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete , class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
 <% else %>
+            <%= link "New classroom", to: Routes.new_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
   <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
   <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
 <% end %>
