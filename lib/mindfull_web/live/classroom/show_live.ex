@@ -28,16 +28,16 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
     <div class="streams pt-5">
       <div class="flex mb-4"> 
-    <div class="w-3/4">
-    <div class="pr-1">
-    <video id="local-video" class="border-solid border-4" playsinline autoplay muted width="100%"></video>
-    </div>
-    </div>
-    <div class="w-1/4">
-    <%= for email <- Enum.filter(@connected_users, fn connected_user -> connected_user != @user.email end) do %>
-       <video id="video-remote-<%= email %>" class="border-solid border-4" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
-     <% end %>
-    </div>
+        <div class="w-3/4">
+          <div class="pr-1">
+            <video id="local-video" class="border-solid border-4" playsinline autoplay muted width="100%"></video>
+          </div>
+        </div>
+        <div class="w-1/4">
+        <%= for email <- Enum.filter(@connected_users, fn connected_user -> connected_user != @user.email end) do %>
+          <video id="video-remote-<%= email %>" class="border-solid border-4" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
+        <% end %>
+        </div>
       </div>
      </div>
 

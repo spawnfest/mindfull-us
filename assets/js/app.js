@@ -93,7 +93,9 @@ Hooks.HandleIceCandidateOffer = {
   
       console.log("new ice candidate from", fromUser, iceCandidate)
   
-      peerConnection.addIceCandidate(iceCandidate)
+      if(iceCandidate) {
+          peerConnection.addIceCandidate(iceCandidate)
+      }
     }
   }
   
