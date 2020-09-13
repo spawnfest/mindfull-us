@@ -18,6 +18,6 @@ MindfullNest is a webapp that allows hosting mindfullness classes. For example o
 
 **OR**
 
-* Visit [link will be here](http://localhost:4000) to see deployed app
+* Visit [MindfullNest on Heroku](https://fathomless-ridge-43338.herokuapp.com/) to see deployed app
 
 
