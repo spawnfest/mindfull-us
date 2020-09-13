@@ -1,6 +1,7 @@
 defmodule MindfullWeb.Classroom.NewLive do
   use MindfullWeb, :live_view
 
+  alias Mindfull.Accounts
   alias Mindfull.Organizer
   alias Mindfull.Organizer.Classroom
 
@@ -10,6 +11,8 @@ defmodule MindfullWeb.Classroom.NewLive do
     <h1>Create a New Classroom</h1>
     <div>
       <%= form_for @changeset, "#", [phx_change: "validate", phx_submit: "save"], fn f -> %>
+
+        <%= hidden_input f, :user_id %>
         <%= text_input f, :title, placeholder: "Title" %>
         <%= error_tag f, :title %>
         <%= submit "Save" %>
@@ -19,8 +22,10 @@ defmodule MindfullWeb.Classroom.NewLive do
   end
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, put_changeset(socket)}
+  def mount(_params, session, socket) do
+    user_token = session["user_token"]
+    user = user_token && Accounts.get_user_by_session_token(user_token)
+    {:ok, put_changeset(socket, %{user_id: user.id})}
   end
 
   @impl true
@@ -41,7 +46,7 @@ defmodule MindfullWeb.Classroom.NewLive do
     end
   end
 
-  defp put_changeset(socket, params \\ %{}) do
+  defp put_changeset(socket, params) do
     assign(socket, :changeset, Classroom.changeset(%Classroom{}, params))
   end
 end
