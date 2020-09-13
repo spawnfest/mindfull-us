@@ -125,9 +125,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
   @impl true
   def handle_event("join_call", _params, socket) do
     for user <- socket.assigns.connected_users do
-      IO.inspect("user")
-      IO.inspect(user)
-
       send_direct_message(
         socket.assigns.id,
         user,
@@ -143,7 +140,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_ice_candidate", payload, socket) do
-    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email}) |> IO.inspect()
+    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_ice_candidate", payload)
     {:noreply, socket}
@@ -168,15 +165,9 @@ defmodule MindfullWeb.Classroom.ShowLive do
   defp list_present(socket) do
     Presence.list("classroom:" <> socket.assigns.id)
     |> Enum.map(fn {k, _} -> k end)
-    |> IO.inspect()
   end
 
   defp send_direct_message(id, to_user, event, payload) do
-    IO.inspect("send")
-    IO.inspect(to_user)
-    IO.inspect(event)
-    IO.inspect(payload)
-
     MindfullWeb.Endpoint.broadcast_from(
       self(),
       "classroom:" <> id <> ":" <> to_user,
