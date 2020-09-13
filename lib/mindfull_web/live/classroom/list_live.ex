@@ -26,7 +26,7 @@ defmodule MindfullWeb.Classroom.ListLive do
                         <p class="text-gray-600 text-xs">Hosted by <b><%= classroom.user.email %></b></p>
                     </div>
                     <div>
-                        <button class="text-3xl font-medium" phx-click=<%= classroom.id %> >Join Classroom</button>
+                        <button class="text-teal-600 text-md font-small" phx-click=<%= classroom.id %> >Join Classroom</button>
                    </div>
                 </div>
       <% end %>
