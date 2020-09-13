@@ -12,7 +12,11 @@ defmodule Mindfull.OrganizerTest do
     @invalid_attrs %{title: nil}
 
     defp create_classroom(attrs) do
-      user = %User{} |> User.registration_changeset(%{email: "test@test", password: "123456789123"}) |> Repo.insert!
+      user =
+        %User{}
+        |> User.registration_changeset(%{email: "test@test", password: "123456789123"})
+        |> Repo.insert!()
+
       attrs = Map.put(attrs, :user_id, user.id)
       Classroom.changeset(%Classroom{}, attrs)
     end
@@ -32,7 +36,7 @@ defmodule Mindfull.OrganizerTest do
       id = classroom.id
       title = classroom.title
       user_id = classroom.user_id
-      assert [%Classroom{id: ^id, title: ^title, user_id: ^user_id}] = Organizer.list_classrooms() 
+      assert [%Classroom{id: ^id, title: ^title, user_id: ^user_id}] = Organizer.list_classrooms()
     end
 
     test "get_classroom!/1 returns the classroom with given id" do
