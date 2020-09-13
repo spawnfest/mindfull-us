@@ -8,6 +8,5 @@ defmodule Mindfull.Repo.Migrations.CreateClassrooms do
 
       timestamps()
     end
-
   end
 end
