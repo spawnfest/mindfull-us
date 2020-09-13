@@ -4,7 +4,7 @@
         <div class="z-20 w-full p-12 bg-white md:shadow-xl">
             <%= if @error_message do %>
               <div class="flex p-3 mb-6 -m-6 text-xs text-red-800 bg-red-200 md:text-base lg:p-6 lg:-m-12 lg:mb-12">
-                  <i class="mr-2 text-2xl fad fa-exclamation-triangle"></i>
+                  <i class="mr-2 text-2xl fa fa-exclamation-triangle"></i>
                   <div class="flex flex-col flex-1">
                     <p><%= @error_message %></p>
                   </div>

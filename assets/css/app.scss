@@ -8,6 +8,16 @@
 
 @tailwind utilities;
 
+/* This file is for your main application css. */
+/* fontawesome. */
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+/* end fontawesome. */
+
+
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {
