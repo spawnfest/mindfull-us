@@ -13,7 +13,10 @@ alias Mindfull.Accounts.User
 alias Mindfull.Organizer.Classroom
 alias Mindfull.Repo
 
-user1 = 
+Repo.delete_all(Classroom)
+Repo.delete_all(User)
+
+user1 =
   %User{}
   |> User.registration_changeset(%{email: "meditation@guru", password: "MeditationIsFun"})
   |> Repo.insert!()
