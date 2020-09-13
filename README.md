@@ -5,6 +5,7 @@
 ### Why?
 
 ### To run app locally
+
     * Install deps with `mix deps.get`
     * Use `mix ecto.setup` for database creation, migration and seeding
     * Install frontend deps by running `npm install --prefix assets`
