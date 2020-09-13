@@ -1,4 +1,5 @@
 defmodule Mindfull.Accounts.UserNotifier do
+  @moduledoc false
   alias Mindfull.Emails.Email
   alias Mindfull.Emails.Mailer
 

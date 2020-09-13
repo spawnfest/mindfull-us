@@ -1,4 +1,5 @@
 defmodule Mindfull.Emails.Email do
+  @moduledoc false
   import Bamboo.Email
 
   def welcome_email(email, body) do

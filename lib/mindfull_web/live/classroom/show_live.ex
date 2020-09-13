@@ -1,4 +1,5 @@
 defmodule MindfullWeb.Classroom.ShowLive do
+  @moduledoc false
   use MindfullWeb, :live_view
 
   alias Mindfull.Accounts
@@ -16,7 +17,11 @@ defmodule MindfullWeb.Classroom.ShowLive do
     <h1 class="text-teal-400 text-5xl font-bold text-center"><%= @classroom.title %></h1>
     </div>
     <div class="w-1/4 text-center">
+    <%= if @joined do %>
+    <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4" phx-click="leave_call">Leave Call</button>
+    <%= else %>
     <button class="mt-5 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4" phx-hook="JoinCall" phx-click="join_call">Join Call</button>
+    <% end %>
     </div>
     </div>
     </p>
@@ -87,6 +92,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
          |> assign(:organizer, classroom.user)
          |> assign(:user, user)
          |> assign(:id, id)
+         |> assign(:joined, false)
          |> assign(:connected_users, [])
          |> assign(:offer_requests, [])
          |> assign(:ice_candidate_offers, [])
@@ -97,8 +103,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_info(%Broadcast{event: "presence_diff"}, socket) do
-    IO.inspect("presence_diff")
-
     {:noreply,
      socket
      |> assign(:connected_users, list_present(socket))}
@@ -109,8 +113,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
   When an offer request has been received, add it to the `@offer_requests` list.
   """
   def handle_info(%Broadcast{event: "request_offers", payload: request}, socket) do
-    IO.inspect("reqest_offers")
-
     {:noreply,
      socket
      |> assign(:offer_requests, socket.assigns.offer_requests ++ [request])}
@@ -118,8 +120,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_info(%Broadcast{event: "new_ice_candidate", payload: payload}, socket) do
-    IO.inspect("new_ice_candidate")
-
     {:noreply,
      socket
      |> assign(:ice_candidate_offers, socket.assigns.ice_candidate_offers ++ [payload])}
@@ -127,8 +127,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_info(%Broadcast{event: "new_answer", payload: payload}, socket) do
-    IO.inspect("new_answer")
-
     {:noreply,
      socket
      |> assign(:answers, socket.assigns.answers ++ [payload])}
@@ -136,8 +134,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_info(%Broadcast{event: "new_sdp_offer", payload: payload}, socket) do
-    IO.inspect("new_sdp_offer")
-
     {:noreply,
      socket
      |> assign(:sdp_offers, socket.assigns.ice_candidate_offers ++ [payload])}
@@ -145,9 +141,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("join_call", _params, socket) do
-    IO.inspect(socket.assigns.id)
-    IO.inspect("join_call")
-
     for user <- socket.assigns.connected_users do
       send_direct_message(
         socket.assigns.id,
@@ -159,12 +152,18 @@ defmodule MindfullWeb.Classroom.ShowLive do
       )
     end
 
+    socket = assign(socket, :joined, true)
+
     {:noreply, socket}
   end
 
   @impl true
+  def handle_event("leave_call", _params, socket) do
+    {:noreply, push_redirect(socket, to: Routes.list_path(socket, :list))}
+  end
+
+  @impl true
   def handle_event("new_ice_candidate", payload, socket) do
-    IO.inspect("new_ice_candidate")
     payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_ice_candidate", payload)
@@ -173,7 +172,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_sdp_offer", payload, socket) do
-    IO.inspect("new_sdp_offer")
     payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_sdp_offer", payload)
@@ -182,7 +180,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_answer", payload, socket) do
-    IO.inspect("new_answer")
     payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_answer", payload)
@@ -192,7 +189,6 @@ defmodule MindfullWeb.Classroom.ShowLive do
   defp list_present(socket) do
     Presence.list("classroom:" <> socket.assigns.id)
     |> Enum.map(fn {k, _} -> k end)
-    |> IO.inspect()
   end
 
   defp send_direct_message(id, to_user, event, payload) do

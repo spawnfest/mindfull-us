@@ -109,3 +109,243 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 #local-video {
   transform: rotateY(180deg);
 }
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 16rem;
+  height: 100vh;
+  margin-left: -16rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+}
+
+aside::-webkit-scrollbar {
+  display: none;
+}
+
+aside.visible {
+  margin-left: 0;
+}
+
+aside .menu {
+  display: flex;
+  flex-direction: column;
+}
+
+aside .menu .link {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  font-size: 1.125rem;
+  --text-opacity: 1;
+  color: #2d3748;
+  color: rgba(45, 55, 72, var(--text-opacity));
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+  --transform-translate-x: 0;
+  --transform-translate-y: 0;
+  --transform-rotate: 0;
+  --transform-skew-x: 0;
+  --transform-skew-y: 0;
+  --transform-scale-x: 1;
+  --transform-scale-y: 1;
+  transform: translateX(var(--transform-translate-x)) translateY(var(--transform-translate-y)) rotate(var(--transform-rotate)) skewX(var(--transform-skew-x)) skewY(var(--transform-skew-y)) scaleX(var(--transform-scale-x)) scaleY(var(--transform-scale-y));
+  border-bottom-width: 1px;
+}
+
+aside .menu .link:hover {
+  --transform-scale-x: 1.05;
+  --transform-scale-y: 1.05;
+  --bg-opacity: 1;
+  background-color: #edf2f7;
+  background-color: rgba(237, 242, 247, var(--bg-opacity));
+}
+
+aside .menu .link.active {
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #2d3748;
+  background-color: rgba(45, 55, 72, var(--bg-opacity));
+}
+
+aside .menu .link.active:hover {
+  --transform-scale-x: 1;
+  --transform-scale-y: 1;
+}
+
+aside .menu .link .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.25rem;
+}
+
+aside .menu .link .fa-external-link,
+aside .menu .link .fa-chevron-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-left: auto;
+  font-size: 1.125rem;
+}
+
+@media (min-width: 768px) {
+}
+
+.nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+  height: 4rem;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  border-bottom-width: 1px;
+}
+
+.nav .inner {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0%;
+  width: 100vw;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nav .inner .toggle-aside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-right-width: 1px;
+}
+
+.nav .inner .toggle-aside i {
+  font-size: 1.875rem;
+}
+
+.nav .inner .back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-right-width: 1px;
+}
+
+.nav .inner .back i {
+  font-size: 1.875rem;
+}
+
+.nav .inner h1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  margin-left: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  --text-opacity: 1;
+  color: #2d3748;
+  color: rgba(45, 55, 72, var(--text-opacity));
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav .inner h1 span {
+  margin-top: -0.5rem;
+  font-size: 0.75rem;
+  font-weight: 300;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav .inner .chats,
+.nav .inner .notifications {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  --text-opacity: 1;
+  color: #000;
+  color: rgba(0, 0, 0, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #f7fafc;
+  background-color: rgba(247, 250, 252, var(--bg-opacity));
+}
+
+.nav .inner .chats .count,
+.nav .inner .notifications .count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.25rem;
+  margin-right: -0.25rem;
+  font-size: 0.75rem;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #f56565;
+  background-color: rgba(245, 101, 101, var(--bg-opacity));
+  border-radius: 9999px;
+}
+
+.nav .inner .chats .icon,
+.nav .inner .notifications .icon {
+  font-size: 1.5rem;
+}
+
+.nav .inner .initials {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #2d3748;
+  background-color: rgba(45, 55, 72, var(--bg-opacity));
+}
