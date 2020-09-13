@@ -15,7 +15,7 @@ MindfullNest is a webapp that allows hosting mindfullness classes. For example o
 * Use `mix ecto.setup` for database creation, migration and seeding
 * Install frontend deps by running `npm install --prefix assets`
 * Start app with `mix phx.server`
-* You can register (no real mail needed :smile:) or use existing users `email: meditation@guru password: "MeditationIsFun"` and `email: yoga@instructor password: YogaIsForEveryone`
+* You can register (no real mail needed :smile:) or use existing users `email: meditation@guru password: MeditationIsFun` and `email: yoga@instructor password: YogaIsForEveryone`
 
 **OR**
 
