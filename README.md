@@ -1,20 +1,15 @@
-# Mindfull
+# MindfullNest
 
-To start your Phoenix server:
+### What?
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+### Why?
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+### To run app locally
+    * Install deps with `mix deps.get`
+    * Use `mix ecto.setup` for database creation, migration and seeding
+    * Install frontend deps by running `npm install --prefix assets`
+    * Start app with `mix phx.server`
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+*OR*
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+    * Visit [link will be here](http://localhost:4000) to see deployed app
