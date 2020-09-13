@@ -53,7 +53,6 @@ function addUserConnection(userEmail) {
 function initStream() {
     const stream = navigator.mediaDevices.getUserMedia({audio: true, video: true, width: "1280"})
         .then((stream) => {
-              // Stores our stream in the global constant, localStream.
             window.localStream = stream
             // Sets our local video element to stream from the user's webcam (stream).
             document.getElementById("local-video").srcObject = stream
@@ -134,9 +133,7 @@ function createPeerConnection(lv, fromUser, offer) {
     // this function's scope.
     let newPeerConnection = new RTCPeerConnection({
       iceServers: [
-        // We're going to get into STUN servers later, but for now, you
-        // may use ours for this portion of development.
-        { urls: "stun:littlechat.app:3478" }
+        { urls: "stun:fathomless-ridge-43338.herokuapp.com:3478" }
       ]
     })
   

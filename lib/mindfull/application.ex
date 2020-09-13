@@ -17,7 +17,8 @@ defmodule Mindfull.Application do
       MindfullWeb.Presence,
 
       # Start the Endpoint (http/https)
-      MindfullWeb.Endpoint
+      MindfullWeb.Endpoint,
+      MindfullWeb.Stun
       # Start a worker by calling: Mindfull.Worker.start_link(arg)
       # {Mindfull.Worker, arg}
     ]
