@@ -6,6 +6,9 @@ defmodule MindfullWeb.Classroom.ListLive do
   @impl true
   def render(assigns) do
     ~L"""
+    <form phx-change="search" class="search-form">
+  <%= text_input :search_field, :query, placeholder: "Search for Classroom", autofocus: true, "phx-debounce": "300" %>
+</form>
     <h1>List of classrooms</h1>
     <%= for classroom <- @classrooms do %>
       <h3><%= classroom.title %></h3>
@@ -23,10 +26,14 @@ defmodule MindfullWeb.Classroom.ListLive do
     }
   end
 
+  @impl true
+  def handle_event("search", %{"search_field" => %{"query" => query}}, socket) do
+    filtered_classrooms = Organizer.filter_classrooms(socket.assigns.classrooms, query)
+    {:noreply, assign(socket, :classrooms, filtered_classrooms)}  
+  end
 
   @impl true
   def handle_event(classroom_id, _params, socket) do
         {:noreply, push_redirect(socket, to: Routes.show_path(socket, :show, classroom_id))}
   end
-
 end

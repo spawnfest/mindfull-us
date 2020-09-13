@@ -97,4 +97,12 @@ defmodule Mindfull.Organizer do
   def change_classroom(%Classroom{} = classroom, attrs \\ %{}) do
     Classroom.changeset(classroom, attrs)
   end
+
+  def filter_classrooms([], _query), do: []
+  def filter_classrooms(classrooms, query) do
+    classrooms
+    |> Enum.filter(
+      &(&1.title =~ query # TODO when organizer is added uncomment|| &1.organizer =~ query  
+    ))
+  end
 end
