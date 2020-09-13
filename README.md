@@ -1,12 +1,12 @@
-# MindfullNest
+# MindfulNest
 
 ### What?
-MindfullNest is a webapp that allows hosting online mindfulness classes. For example one may want to host a `Meditation for beginners` class. They can easily set it up and get others to join (and, in future, pay for) class online.
+MindfulNest is a webapp that allows hosting online mindfulness classes. For example one may want to host a `Meditation for beginners` class. They can easily set it up and get others to join (and, in future, pay for) class online.
 
 ### Why?
-* We feel there's a lack of solution focused on mindfullness
-* In our opinion mindfullness is an important part of mental wellbeing, which, globally, is quite low
-* Due to COVID situation many people are left without offline mindfullness classes, mindfullNest could help them by providing online alternative
+* We feel there's a lack of solution focused on mindfulness
+* In our opinion mindfulness is an important part of mental wellbeing, which, globally, is quite low
+* Due to COVID situation many people are left without offline mindfulness classes, MindfulNest could help them by providing online alternative
 * We wanted to learn some Phoenix LiveView and make webapp with minimum JS possible :wink:
 
 ### To run app locally
@@ -19,7 +19,7 @@ MindfullNest is a webapp that allows hosting online mindfulness classes. For exa
 
 **OR**
 
-* Visit [MindfullNest on Heroku](https://fathomless-ridge-43338.herokuapp.com/) to see deployed app (there may be problem with video connection, more info below)
+* Visit [MindfulNest on Heroku](https://fathomless-ridge-43338.herokuapp.com/) to see deployed app (there may be problem with video connection, more info below)
 
 
 ### What's next/what we didn't have time to do?
