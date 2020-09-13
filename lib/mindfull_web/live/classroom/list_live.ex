@@ -20,10 +20,10 @@ defmodule MindfullWeb.Classroom.ListLive do
                 <div class="border w-full rounded mt-5 flex p-4 justify-between items-center flex-wrap">
                     <div class="w-2/3">
                         <h3 class="text-lg font-large"><%= classroom.title %></h3>
-                        <p class="text-gray-600 text-xs">Hosted by <b>Meditation Guru</b></p>
+                        <p class="text-gray-600 text-xs">Hosted by <b><%= classroom.user.email %></b></p>
                     </div>
                     <div>
-                        <button class="text-3xl font-medium" phx-click=<% classroom.id %> >Join Classroom</h4>
+                        <button class="text-3xl font-medium" phx-click=<%= classroom.id %> >Join Classroom</h4>
                    </div>
                 </div>
       <% end %>
