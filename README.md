@@ -16,6 +16,7 @@ MindfullNest is a webapp that allows hosting mindfullness classes. For example o
 * Install frontend deps by running `npm install --prefix assets`
 * Start app with `mix phx.server`
 * You can register (no real mail needed :smile:) or use existing users `email: meditation@guru password: MeditationIsFun` and `email: yoga@instructor password: YogaIsForEveryone`
+* If you have problems getting deps, try checking this out: `https://github.com/processone/ejabberd/issues/1107#issuecomment-217828211`
 
 **OR**
 
