@@ -17,7 +17,11 @@ defmodule MindfullWeb.Classroom.ShowLive do
     <h1 class="text-teal-400 text-5xl font-bold text-center"><%= @classroom.title %></h1>
     </div>
     <div class="w-1/4 text-center">
+    <%= if @joined do %>
+    <button class="mt-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4" phx-click="leave_call">Leave Call</button>
+    <%= else %>
     <button class="mt-5 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4" phx-hook="JoinCall" phx-click="join_call">Join Call</button>
+    <% end %>
     </div>
     </div>
     </p>
@@ -88,6 +92,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
          |> assign(:organizer, classroom.user)
          |> assign(:user, user)
          |> assign(:id, id)
+         |> assign(:joined, false)
          |> assign(:connected_users, [])
          |> assign(:offer_requests, [])
          |> assign(:ice_candidate_offers, [])
@@ -147,7 +152,14 @@ defmodule MindfullWeb.Classroom.ShowLive do
       )
     end
 
+    socket = assign(socket, :joined, true)
+
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("leave_call", _params, socket) do
+    {:noreply, push_redirect(socket, to: Routes.list_path(socket, :list))}
   end
 
   @impl true
