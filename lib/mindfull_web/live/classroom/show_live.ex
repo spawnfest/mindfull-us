@@ -10,28 +10,33 @@ defmodule MindfullWeb.Classroom.ShowLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <h1><%= @classroom.title %></h1>
-    <h2><%= @classroom.user_id %></h2>
-    <h3>Connected Users:</h3>
-    <ul>
-      <%= for id <- @connected_users do %>
-        <li><%= id %></li>
-      <% end %>
-    </ul>
-    <h3><%= @user.email %></h3>
+    <p class="pt-5">
+    <div class="flex">
+    <div class="w-3/4 text-center">
+    <h1 class="text-teal-400 text-5xl font-bold text-center"><%= @classroom.title %></h1>
+    </div>
+    <div class="w-1/4 text-center">
+    <button class="mt-5 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4" phx-hook="JoinCall" phx-click="join_call">Join Call</button>
+    </div>
+    </div>
+    </p>
 
-    <div class="streams">
-      <h2>Preview</h2>
-      <video id="local-video" playsinline autoplay muted width="600"></video>
-
-      <h2>Videos</h2>
-     <%= for email <- @connected_users do %>
-       <video id="video-remote-<%= email %>" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
+    <div class="streams pt-5">
+      <div class="flex mb-4"> 
+    <div class="w-3/4">
+    <div class="pr-1">
+    <video id="local-video" class="border-solid border-4" playsinline autoplay muted width="100%"></video>
+    </div>
+    </div>
+    <div class="w-1/4">
+    <%= for email <- Enum.filter(@connected_users, fn connected_user -> connected_user != @user.email end) do %>
+       <video id="video-remote-<%= email %>" class="border-solid border-4" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
      <% end %>
+    </div>
+      </div>
      </div>
 
-    <button class="button" phx-hook="JoinCall" phx-click="join_call">Join Call</button>
-
+    <div class="hidden">
     <div id="offer-requests">
       <%= for request <- @offer_requests do %>
       <span phx-hook="HandleOfferRequest" data-from-user-email="<%= request.from_user %>"></span>
@@ -54,6 +59,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
       <%= for ice_candidate_offer <- @ice_candidate_offers do %>
       <span phx-hook="HandleIceCandidateOffer" data-from-user-email="<%= ice_candidate_offer["from_user"] %>" data-ice-candidate="<%= Jason.encode!(ice_candidate_offer["candidate"]) %>"></span>
       <% end %>
+    </div>
     </div>
     """
   end
