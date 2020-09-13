@@ -46,7 +46,11 @@ defmodule Mindfull.Organizer do
       iex> get_classroom!(123)
       %Classroom{}
   """
-  def get_classroom(id), do: Repo.get(Classroom, id)
+  def get_classroom(id) do
+    Classroom
+    |> preload(:user)
+    |> Repo.get(id)
+  end
 
   def create_classroom(changeset) do
     Repo.insert(changeset)
@@ -100,10 +104,9 @@ defmodule Mindfull.Organizer do
   end
 
   def filter_classrooms([], _query), do: []
+
   def filter_classrooms(classrooms, query) do
     classrooms
-    |> Enum.filter(
-      &(&1.title =~ query || &1.user.email =~ query  
-    ))
+    |> Enum.filter(&(&1.title =~ query || &1.user.email =~ query))
   end
 end

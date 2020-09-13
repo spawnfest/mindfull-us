@@ -8,15 +8,13 @@ defmodule MindfullWeb.Classroom.NewLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <h1>Create a New Classroom</h1>
-    <div>
-      <%= form_for @changeset, "#", [phx_change: "validate", phx_submit: "save"], fn f -> %>
-
-        <%= hidden_input f, :user_id %>
-        <%= text_input f, :title, placeholder: "Title" %>
-        <%= error_tag f, :title %>
-        <%= submit "Save" %>
-      <% end %>
+    <div class="min-h-screen bg-gray-300">
+        <%= form_for @changeset, "#", [phx_change: "validate", phx_submit: "save", class: "container mx-auto p-10 max-w-screen-lg"], fn f -> %>
+          <%= hidden_input f, :user_id %>
+          <%= text_input f, :title, class: "h-16 border-solid border w-full rounded px-3 py-2", placeholder: "Name of your class" %>
+          <%= submit "Save", class: "w-full mt-5 bg-teal-500 text-white px-6 md:px-8 py-3 md:py-4 text-md md:text-md text-secondary font-bold uppercase rounded hover:bg-primary-400" %>
+          <%= error_tag f, :title %>
+        <% end %>
     </div>
     """
   end
