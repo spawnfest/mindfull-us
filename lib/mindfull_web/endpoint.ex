@@ -11,7 +11,7 @@ defmodule MindfullWeb.Endpoint do
   ]
 
   socket "/socket", MindfullWeb.UserSocket,
-    websocket: [timeout: 45_000],
+    websocket: true,
     longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]

@@ -1,8 +1,8 @@
 defmodule MindfullWeb.Classroom.ShowLive do
   use MindfullWeb, :live_view
 
+  alias Mindfull.Accounts
   alias Mindfull.Organizer
-  alias Mindfull.ConnectedUser
 
   alias MindfullWeb.Presence
   alias Phoenix.Socket.Broadcast
@@ -13,17 +13,16 @@ defmodule MindfullWeb.Classroom.ShowLive do
     <h1><%= @classroom.title %></h1>
     <h3>Connected Users:</h3>
     <ul>
-      <%= for uuid <- @connected_users do %>
-        <li><%= uuid %></li>
+      <%= for id <- @connected_users do %>
+        <li><%= id %></li>
       <% end %>
     </ul>
-
 
     <div class="streams">
       <video id="local-video" playsinline autoplay muted width="600"></video>
 
-     <%= for uuid <- @connected_users do %>
-       <video id="video-remote-<%= uuid %>" data-user-uuid="<%= uuid %>" playsinline autoplay phx-hook="InitUser"></video>
+     <%= for email <- @connected_users do %>
+       <video id="video-remote-<%= email %>" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
      <% end %>
      </div>
 
@@ -31,37 +30,39 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
     <div id="offer-requests">
       <%= for request <- @offer_requests do %>
-      <span phx-hook="HandleOfferRequest" data-from-user-uuid="<%= request.from_user.uuid %>"></span>
+      <span phx-hook="HandleOfferRequest" data-from-user-email="<%= request.from_user %>"></span>
       <% end %>
     </div>
 
     <div id="sdp-offers">
       <%= for sdp_offer <- @sdp_offers do %>
-      <span phx-hook="HandleSdpOffer" data-from-user-uuid="<%= sdp_offer["from_user"] %>" data-sdp="<%= sdp_offer["description"]["sdp"] %>"></span>
+      <span phx-hook="HandleSdpOffer" data-from-user-email="<%= sdp_offer["from_user"] %>" data-sdp="<%= sdp_offer["description"]["sdp"] %>"></span>
       <% end %>
     </div>
 
     <div id="sdp-answers">
       <%= for answer <- @answers do %>
-      <span phx-hook="HandleAnswer" data-from-user-uuid="<%= answer["from_user"] %>" data-sdp="<%= answer["description"]["sdp"] %>"></span>
+      <span phx-hook="HandleAnswer" data-from-user-email="<%= answer["from_user"] %>" data-sdp="<%= answer["description"]["sdp"] %>"></span>
       <% end %>
     </div>
 
     <div id="ice-candidates">
       <%= for ice_candidate_offer <- @ice_candidate_offers do %>
-      <span phx-hook="HandleIceCandidateOffer" data-from-user-uuid="<%= ice_candidate_offer["from_user"] %>" data-ice-candidate="<%= Jason.encode!(ice_candidate_offer["candidate"]) %>"></span>
+      <span phx-hook="HandleIceCandidateOffer" data-from-user-email="<%= ice_candidate_offer["from_user"] %>" data-ice-candidate="<%= Jason.encode!(ice_candidate_offer["candidate"]) %>"></span>
       <% end %>
     </div>
     """
   end
 
   @impl true
-  def mount(%{"id" => id}, _session, socket) do
-    user = create_connected_user()
-    Phoenix.PubSub.subscribe(Mindfull.PubSub, "room:" <> id)
-    Phoenix.PubSub.subscribe(Mindfull.PubSub, "room:" <> id <> ":" <> user.uuid)
+  def mount(%{"id" => id}, session, socket) do
+    user_token = session["user_token"]
+    user = user_token && Accounts.get_user_by_session_token(user_token)
+    Phoenix.PubSub.subscribe(Mindfull.PubSub, "classroom:" <> id)
+    Phoenix.PubSub.subscribe(Mindfull.PubSub, "classroom:" <> id <> ":" <> user.email)
 
-    {:ok, _} = Presence.track(self(), "room:" <> id, user.uuid, %{})
+    {:ok, _} = Presence.track(self(), "classroom:" <> id, user.email, %{})
+
     case Organizer.get_classroom(id) do
       nil ->
         {:ok,
@@ -79,20 +80,15 @@ defmodule MindfullWeb.Classroom.ShowLive do
          |> assign(:offer_requests, [])
          |> assign(:ice_candidate_offers, [])
          |> assign(:sdp_offers, [])
-         |> assign(:answers, [])
-        }
+         |> assign(:answers, [])}
     end
-  end
-
-  defp create_connected_user do
-    %ConnectedUser{uuid: UUID.uuid4()}
   end
 
   @impl true
   def handle_info(%Broadcast{event: "presence_diff"}, socket) do
-     {:noreply,
-      socket
-        |> assign(:connected_users, list_present(socket))}
+    {:noreply,
+     socket
+     |> assign(:connected_users, list_present(socket))}
   end
 
   @impl true
@@ -101,44 +97,43 @@ defmodule MindfullWeb.Classroom.ShowLive do
   """
   def handle_info(%Broadcast{event: "request_offers", payload: request}, socket) do
     {:noreply,
-      socket
-      |> assign(:offer_requests, socket.assigns.offer_requests ++ [request])
-    }
+     socket
+     |> assign(:offer_requests, socket.assigns.offer_requests ++ [request])}
   end
 
   @impl true
   def handle_info(%Broadcast{event: "new_ice_candidate", payload: payload}, socket) do
     {:noreply,
-      socket
-      |> assign(:ice_candidate_offers, socket.assigns.ice_candidate_offers ++ [payload])
-    }
+     socket
+     |> assign(:ice_candidate_offers, socket.assigns.ice_candidate_offers ++ [payload])}
   end
 
   @impl true
   def handle_info(%Broadcast{event: "new_answer", payload: payload}, socket) do
     {:noreply,
-      socket
-      |> assign(:answers, socket.assigns.answers ++ [payload])
-    }
+     socket
+     |> assign(:answers, socket.assigns.answers ++ [payload])}
   end
 
   @impl true
   def handle_info(%Broadcast{event: "new_sdp_offer", payload: payload}, socket) do
     {:noreply,
-      socket
-      |> assign(:sdp_offers, socket.assigns.ice_candidate_offers ++ [payload])
-    }
+     socket
+     |> assign(:sdp_offers, socket.assigns.ice_candidate_offers ++ [payload])}
   end
 
   @impl true
   def handle_event("join_call", _params, socket) do
     for user <- socket.assigns.connected_users do
+      IO.inspect("user")
+      IO.inspect(user)
+
       send_direct_message(
         socket.assigns.id,
         user,
         "request_offers",
         %{
-          from_user: socket.assigns.user
+          from_user: socket.assigns.user.email
         }
       )
     end
@@ -148,7 +143,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_ice_candidate", payload, socket) do
-    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.uuid})
+    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email}) |> IO.inspect()
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_ice_candidate", payload)
     {:noreply, socket}
@@ -156,7 +151,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_sdp_offer", payload, socket) do
-    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.uuid})
+    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_sdp_offer", payload)
     {:noreply, socket}
@@ -164,22 +159,27 @@ defmodule MindfullWeb.Classroom.ShowLive do
 
   @impl true
   def handle_event("new_answer", payload, socket) do
-    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.uuid})
+    payload = Map.merge(payload, %{"from_user" => socket.assigns.user.email})
 
     send_direct_message(socket.assigns.id, payload["toUser"], "new_answer", payload)
     {:noreply, socket}
   end
 
-
   defp list_present(socket) do
-     Presence.list("room:" <> socket.assigns.id)
-      |> Enum.map(fn {k, _} -> k end)
-   end
+    Presence.list("classroom:" <> socket.assigns.id)
+    |> Enum.map(fn {k, _} -> k end)
+    |> IO.inspect()
+  end
 
-   defp send_direct_message(id, to_user, event, payload) do
+  defp send_direct_message(id, to_user, event, payload) do
+    IO.inspect("send")
+    IO.inspect(to_user)
+    IO.inspect(event)
+    IO.inspect(payload)
+
     MindfullWeb.Endpoint.broadcast_from(
       self(),
-      "room:" <> id <> ":" <> to_user,
+      "classroom:" <> id <> ":" <> to_user,
       event,
       payload
     )
