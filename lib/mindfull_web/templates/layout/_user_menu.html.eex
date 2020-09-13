@@ -1,3 +1,4 @@
+<%= link "All classrooms", to: Routes.list_path(@conn, :list), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
 <%= if @current_user do %>
             <%= link "New classroom", to: Routes.new_path(@conn, :new), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>
   <%= link @current_user.email, to: Routes.user_settings_path(@conn, :edit), class: "px-6 py-3 font-bold uppercase text-secondary hover:text-primary" %>

@@ -15,7 +15,7 @@ defmodule MindfullWeb.Classroom.ListLive do
   end
 
   @impl true
-  def mount(params, _session, socket) do
+  def mount(_params, _session, socket) do
     classrooms = Organizer.list_classrooms()
 
     {:ok, socket
@@ -26,7 +26,6 @@ defmodule MindfullWeb.Classroom.ListLive do
 
   @impl true
   def handle_event(classroom_id, _params, socket) do
-
         {:noreply, push_redirect(socket, to: Routes.show_path(socket, :show, classroom_id))}
   end
 
