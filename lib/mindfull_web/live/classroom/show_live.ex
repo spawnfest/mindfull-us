@@ -11,12 +11,14 @@ defmodule MindfullWeb.Classroom.ShowLive do
   def render(assigns) do
     ~L"""
     <h1><%= @classroom.title %></h1>
+    <h2><%= @classroom.user_id %></h2>
     <h3>Connected Users:</h3>
     <ul>
       <%= for id <- @connected_users do %>
         <li><%= id %></li>
       <% end %>
     </ul>
+    <h3><%= @user.email %></h3>
 
     <div class="streams">
       <h2>Preview</h2>
