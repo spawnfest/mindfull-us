@@ -84,6 +84,7 @@ defmodule MindfullWeb.Classroom.ShowLive do
         {:ok,
          socket
          |> assign(:classroom, classroom)
+         |> assign(:organizer, classroom.user)
          |> assign(:user, user)
          |> assign(:id, id)
          |> assign(:connected_users, [])
