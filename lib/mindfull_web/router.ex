@@ -17,7 +17,7 @@ defmodule MindfullWeb.Router do
     plug :accepts, ["json"]
   end
 
-  # TODO remove when configured mail server
+  # remove when configured mail server
   # if Mix.env == :dev do
   forward "/sent_emails", Bamboo.SentEmailViewerPlug
   # end
@@ -26,7 +26,6 @@ defmodule MindfullWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-
 
     scope "/classroom" do
       live "/list", Classroom.ListLive, :list

@@ -1,4 +1,5 @@
 defmodule MindfullWeb.Classroom.NewLive do
+  @moduledoc false
   use MindfullWeb, :live_view
 
   alias Mindfull.Accounts

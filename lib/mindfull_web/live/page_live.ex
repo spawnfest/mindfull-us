@@ -1,4 +1,5 @@
 defmodule MindfullWeb.PageLive do
+  @moduledoc false
   use MindfullWeb, :live_view
 
   @impl true
