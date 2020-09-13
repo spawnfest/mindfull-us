@@ -2,10 +2,10 @@ defmodule Mindfull.OrganizerTest do
   use Mindfull.DataCase
 
   alias Mindfull.Organizer
+  alias Mindfull.Organizer.Classroom
   alias Mindfull.Accounts.User
 
   describe "classrooms" do
-    alias Mindfull.Organizer.Classroom
 
     @valid_attrs %{title: "some title"}
     @update_attrs %{title: "some updated title"}
@@ -84,6 +84,53 @@ defmodule Mindfull.OrganizerTest do
     test "change_classroom/1 returns a classroom changeset" do
       classroom = classroom_fixture()
       assert %Ecto.Changeset{} = Organizer.change_classroom(classroom)
+    end
+  end
+
+  describe "filtering" do
+    setup do
+      user1 =
+        %User{}
+        |> User.registration_changeset(%{email: "test@test", password: "123456789123"})
+        |> Repo.insert!()
+
+      user2 =
+        %User{}
+        |> User.registration_changeset(%{email: "meditation@guru", password: "123456789123"})
+        |> Repo.insert!()
+
+      attrs1 = %{title: "First", user_id: user1.id}
+
+      classroom1 =
+        %Classroom{}
+        |> Classroom.changeset(attrs1)
+        |> Repo.insert!()
+
+      attrs2 = %{title: "Second", user_id: user1.id}
+
+      classroom2 =
+        %Classroom{}
+        |> Classroom.changeset(attrs2)
+        |> Repo.insert!()
+
+      attrs3 = %{title: "Second Other", user_id: user2.id}
+
+      classroom3 =
+        %Classroom{}
+        |> Classroom.changeset(attrs3)
+        |> Repo.insert!()
+
+      {:ok, user1: user1, user2: user2, classrooms: [classroom1, classroom2, classroom3]}
+    end
+
+    test "filter by unique name", %{classrooms: [c1, _, _]} do
+      classrooms = Organizer.list_classrooms()
+      filtered_classrooms = Organizer.filter_classrooms(classrooms, "Firs")
+
+      assert [classroom] = filtered_classrooms
+      assert classroom.title == c1.title
+      assert classroom.id == c1.id
+      assert classroom.user_id == c1.user_id
     end
   end
 end
