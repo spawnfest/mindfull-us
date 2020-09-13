@@ -9,11 +9,30 @@ defmodule MindfullWeb.Classroom.ListLive do
     <form phx-change="search" class="search-form">
   <%= text_input :search_field, :query, placeholder: "Search for Classroom", autofocus: true, "phx-debounce": "300" %>
 </form>
-    <h1>List of classrooms</h1>
+
+<div class="min-h-screen bg-gray-300">
+    <div class="container mx-auto p-10 max-w-screen-lg">
+        <div class="bg-white rounded shadow p-8">
+            <div>
+                <h3 class="text-xl mt-4 font-bold">Classroom List</h3>
+                <!--     BOX     -->
     <%= for classroom <- @classrooms do %>
-      <h3><%= classroom.title %></h3>
-      <button class="button" phx-click=<%= classroom.id %> >Join Classroom</button>
-    <% end %>
+                <div class="border w-full rounded mt-5 flex p-4 justify-between items-center flex-wrap">
+                    <div class="w-2/3">
+                        <h3 class="text-lg font-large"><%= classroom.title %></h3>
+                        <p class="text-gray-600 text-xs">Hosted by <b>Meditation Guru</b></p>
+                    </div>
+                    <div>
+                        <button class="text-3xl font-medium" phx-click=<% classroom.id %> >Join Classroom</h4>
+                   </div>
+                </div>
+      <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
 """
   end
 
