@@ -5,7 +5,6 @@ defmodule Mindfull.Organizer.Classroom do
   alias Mindfull.Accounts.User
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
   schema "classrooms" do
     field :title, :string
 
@@ -17,7 +16,7 @@ defmodule Mindfull.Organizer.Classroom do
   @doc false
   def changeset(classroom, attrs) do
     classroom
-    |> cast(attrs, [:title])
-    |> validate_required([:title])
+    |> cast(attrs, [:title, :user_id])
+    |> validate_required([:title, :user_id])
   end
 end
