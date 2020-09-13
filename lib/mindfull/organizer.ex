@@ -103,7 +103,7 @@ defmodule Mindfull.Organizer do
   def filter_classrooms(classrooms, query) do
     classrooms
     |> Enum.filter(
-      &(&1.title =~ query # TODO when organizer is added uncomment|| &1.organizer =~ query  
+      &(&1.title =~ query || &1.user.email =~ query  
     ))
   end
 end
