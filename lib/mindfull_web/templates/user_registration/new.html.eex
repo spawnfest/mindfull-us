@@ -1,26 +1,24 @@
-<h1>Register</h1>
 
-<%= form_for @changeset, Routes.user_registration_path(@conn, :create), fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<section style="background: url(/images/focus3.jpeg) no-repeat center center fixed" class="flex flex-col items-center justify-between w-screen h-screen overflow-x-scroll bg-white md:bg-gray-300 md:bg-opacity-50">
+    <div class="flex flex-col items-center w-full py-12 md:my-auto md:max-w-lg">
+        <div class="z-20 w-full p-12 bg-white md:shadow-xl">
+            <%= form_for @changeset, Routes.user_registration_path(@conn, :create), [class: "px-8 pt-6 pb-8 mb-4"], fn f -> %>
+                <div class="mb-4">
+                  <%= email_input f, :email, required: true, class: "border w-full py-2 px-3 h-16 outline-none focus:bg-teal-100", placeholder: "Email" %>
+                  <div class="mt-4 text-xs tex text-red-600">
+                    <%= error_tag f, :email %>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <%= password_input f, :password, required: true, class: "border w-full py-2 px-3 h-16 outline-none focus:bg-teal-100", placeholder: "Password" %>
+                  <div class="mt-4 text-xs tex text-red-600">
+                    <%= error_tag f, :password %>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between">
+                <%= submit "Register", class: "bg-teal-500 text-white px-6 md:px-8 py-3 md:py-4 text-md md:text-md text-secondary font-bold uppercase rounded hover:bg-primary-400" %>
+                </div>
+          <% end %>
+        </div>
     </div>
-  <% end %>
-
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
-
-  <div>
-    <%= submit "Register" %>
-  </div>
-<% end %>
-
-<p>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+</section>
