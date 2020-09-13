@@ -103,8 +103,10 @@ defmodule Mindfull.Organizer do
     Classroom.changeset(classroom, attrs)
   end
 
+  @doc """
+  Returns a filtered list of classrooms. Uses either title or organizer's mail for filtering
+  """
   def filter_classrooms([], _query), do: []
-
   def filter_classrooms(classrooms, query) do
     classrooms
     |> Enum.filter(&(&1.title =~ query || &1.user.email =~ query))
