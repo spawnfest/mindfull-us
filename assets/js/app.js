@@ -135,7 +135,7 @@ function createPeerConnection(lv, fromUser, offer) {
     // this function's scope.
     let newPeerConnection = new RTCPeerConnection({
       iceServers: [
-        { urls: "stun:fathomless-ridge-43338.herokuapp.com:3478" }
+        { urls: "stun:littlechat.app:3478" }
       ]
     })
   

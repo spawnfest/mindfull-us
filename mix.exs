@@ -51,8 +51,7 @@ defmodule Mindfull.MixProject do
       {:phx_gen_auth, "~> 0.4.0", only: :dev, runtime: false},
       {:bamboo, "~> 1.5"},
       {:uuid, "~> 1.1"},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:stun, "~> 1.0"}
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 
