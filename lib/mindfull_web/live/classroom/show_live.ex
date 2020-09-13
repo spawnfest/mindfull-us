@@ -19,8 +19,10 @@ defmodule MindfullWeb.Classroom.ShowLive do
     </ul>
 
     <div class="streams">
+      <h2>Preview</h2>
       <video id="local-video" playsinline autoplay muted width="600"></video>
 
+      <h2>Videos</h2>
      <%= for email <- @connected_users do %>
        <video id="video-remote-<%= email %>" data-user-email="<%= email %>" playsinline autoplay phx-hook="InitUser"></video>
      <% end %>
