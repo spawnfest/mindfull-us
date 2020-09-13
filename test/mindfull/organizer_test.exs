@@ -6,7 +6,6 @@ defmodule Mindfull.OrganizerTest do
   alias Mindfull.Accounts.User
 
   describe "classrooms" do
-
     @valid_attrs %{title: "some title"}
     @update_attrs %{title: "some updated title"}
     @invalid_attrs %{title: nil}
@@ -123,7 +122,7 @@ defmodule Mindfull.OrganizerTest do
       {:ok, user1: user1, user2: user2, classrooms: [classroom1, classroom2, classroom3]}
     end
 
-    test "filter by unique name", %{classrooms: [c1, _, _]} do
+    test "filter by unique title", %{classrooms: [c1, _, _]} do
       classrooms = Organizer.list_classrooms()
       filtered_classrooms = Organizer.filter_classrooms(classrooms, "Firs")
 
@@ -131,6 +130,28 @@ defmodule Mindfull.OrganizerTest do
       assert classroom.title == c1.title
       assert classroom.id == c1.id
       assert classroom.user_id == c1.user_id
+    end
+
+    test "filter by organizer email", %{classrooms: [c1, _, _]} do
+      classrooms = Organizer.list_classrooms()
+      filtered_classrooms = Organizer.filter_classrooms(classrooms, "test@te")
+
+      assert [class1, class2] = filtered_classrooms
+      assert class1.user_id == c1.user_id
+      assert class2.user_id == c1.user_id
+    end
+
+    test "filter by not unique title", %{classrooms: [_, c2, c3]} do
+      classrooms = Organizer.list_classrooms()
+      filtered_classrooms = Organizer.filter_classrooms(classrooms, "Seco")
+
+      assert [class2, class3] = filtered_classrooms
+      assert class2.id == c2.id
+      assert class2.title == c2.title
+      assert class2.user_id == c2.user_id
+      assert class3.id == c3.id
+      assert class3.title == c3.title
+      assert class3.user_id == c3.user_id
     end
   end
 end
