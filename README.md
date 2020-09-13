@@ -6,6 +6,7 @@ MindfullNest is a webapp that allows hosting mindfullness classes. For example o
 ### Why?
 * We feel there's a lack of solution like this focused on mindfullness
 * In our opinion mindfullness is an important part of mental wellbeing, which, globally, is quite low
+* Due to COVID situation many people are left without offline mindfullness classes, MindfullNest could help them
 * We wanted to learn some Phoenix LiveView and make webapp with minimum JS possible :wink:
 
 ### To run app locally
