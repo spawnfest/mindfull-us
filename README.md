@@ -13,7 +13,7 @@ MindfulNest is a webapp that allows hosting online mindfulness classes. For exam
 
 * Install deps with `mix deps.get`
 * Use `mix ecto.setup` for database creation, migration and seeding
-* Install frontend deps by running `npm install --prefix assets`
+* Install frontend deps by running `npm install --prefix assets` or `cd assets` and then `npm install`
 * Start app with `mix phx.server`
 * You can register (no real mail needed :smile:) or use existing users `email: meditation@guru password: MeditationIsFun` and `email: yoga@instructor password: YogaIsForEveryone`
 
@@ -21,6 +21,12 @@ MindfulNest is a webapp that allows hosting online mindfulness classes. For exam
 
 * Visit [MindfulNest on Heroku](https://fathomless-ridge-43338.herokuapp.com/) to see deployed app (there may be problem with video connection, more info below)
 
+#### Environment setup (this is what it definetely works on, as checked on local env)
+* Elixir 1.10
+* npm - 6.13.7
+* PostGreSQL 10+
+
+**There may be a need of updating Hex/rebar, those errors are quite clearly visible**
 
 ### What's next/what we didn't have time to do?
 
