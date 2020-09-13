@@ -2,6 +2,7 @@ defmodule Mindfull.OrganizerTest do
   use Mindfull.DataCase
 
   alias Mindfull.Organizer
+  alias Mindfull.Accounts.User
 
   describe "classrooms" do
     alias Mindfull.Organizer.Classroom
@@ -10,7 +11,9 @@ defmodule Mindfull.OrganizerTest do
     @update_attrs %{title: "some updated title"}
     @invalid_attrs %{title: nil}
 
-    defp create_classroom(attrs \\ %{}) do
+    defp create_classroom(attrs) do
+      user = %User{} |> User.registration_changeset(%{email: "test@test", password: "123456789123"}) |> Repo.insert!
+      attrs = Map.put(attrs, :user_id, user.id)
       Classroom.changeset(%Classroom{}, attrs)
     end
 
@@ -26,7 +29,10 @@ defmodule Mindfull.OrganizerTest do
 
     test "list_classrooms/0 returns all classrooms" do
       classroom = classroom_fixture()
-      assert Organizer.list_classrooms() == [classroom]
+      id = classroom.id
+      title = classroom.title
+      user_id = classroom.user_id
+      assert [%Classroom{id: ^id, title: ^title, user_id: ^user_id}] = Organizer.list_classrooms() 
     end
 
     test "get_classroom!/1 returns the classroom with given id" do
