@@ -10,12 +10,13 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,400i,600,600i,700&display=swap" rel="stylesheet">
   </head>
-  <body class="font-custom min-h-screen">
-    <header class="py-4 px-6 top-0 left-0 right-0 z-10">
+  <body class="min-h-screen font-custom">
+    <header class="top-0 left-0 right-0 z-10 px-6 py-4">
       <div class="container mx-auto">
+        <%= render "_user_menu.html", assigns %>
         <div class="flex items-center">
           <button class="text-secondary lg:hidden">
-            <svg class="current-fill h-6 w-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            <svg class="w-6 h-6 current-fill" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                                                                                                                viewBox="-49 141 512 512" style="enable-background:new -49 141 512 512;" xml:space="preserve">
               <g>
               <g>
@@ -31,11 +32,12 @@
             </svg>
 
           </button>
-          <nav class="hidden lg:flex items-center">
-            <a href="/" class="px-6 py-3 font-bold uppercase text-primary border-b-2 border-primary">Home</a>
-            <%= render "_user_menu.html", assigns %>
+          <nav class="items-center hidden lg:flex">
+            <a href="/" class="px-6 py-3 font-bold uppercase border-b-2 text-primary border-primary">Home</a>
+            <%= render "_menu.html", assigns %>
           </nav>
         </div>
+
       </div>
     </header>
     <main>
@@ -43,7 +45,7 @@
     </main>
   </body>
   <footer class="bg-blue-100">
-    <div class="container mx-auto px-6 py-12 text-secondary-500 text-center border-t border-gray-300">
+    <div class="container px-6 py-12 mx-auto text-center border-t border-gray-300 text-secondary-500">
       <p>Copyright ©2020 MindfullNest. All rights reserved.</p>
     </div>
   </footer>
